@@ -48,14 +48,13 @@ class SimpleChatBot:
         distances = [(i, self.calc_distance(input_sentence, question)) 
                     for i, question in enumerate(self.questions)]
             
-        # 레벤슈타인_거리.py에서 실행된 경우에만 거리 출력
+        # 레벤슈타인_테스트.py에서 실행된 경우에만 거리 출력
         if os.path.basename(sys.modules['__main__'].__file__) == "b.py":
             for i, dist in distances:
                 print(f"[{i}] \"{self.questions[i]}\" -> 거리: {dist}")
                
-        # 거리가 가장 작은 질문의 인덱스, 거리 반환
+        # 거리가 가장 작은 질문의 인덱스 반환
         best_match_index = min(distances, key=lambda x: x[1])[0]
-        #return self.answers[best_match_index]
         return self.answers[best_match_index]
 
 # CSV 파일 경로를 지정하세요.

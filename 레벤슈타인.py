@@ -3,9 +3,11 @@ import sys , os
 
 class SimpleChatBot:
     def __init__(self, filepath):
+         # 생성자: CSV 파일에서 질문과 답변 데이터를 로드
         self.questions, self.answers = self.load_data(filepath)
 
     def load_data(self, filepath):
+         # CSV 파일을 불러와서 질문(Q)과 답변(A) 열을 각각 리스트로 반환
         data = pd.read_csv(filepath)
         questions = data['Q'].tolist()  # 질문열만 뽑아 파이썬 리스트로 저장
         answers = data['A'].tolist()   # 답변열만 뽑아 파이썬 리스트로 저장
@@ -15,10 +17,10 @@ class SimpleChatBot:
         if a == b: return 0  # 같으면 0을 반환
         a_len = len(a)  # a 길이
         b_len = len(b)  # b 길이
-        if a == "": return b_len
+        if a == "": return b_len # 한 쪽이 비어 있으면 다른 쪽 길이만큼 삽입 필요
         if b == "": return a_len
 
-        # 리스트 컴프리헨션으로 행렬 초기화
+        # 리스트 컴프리헨션으로 행렬 초기화(거리 계산용 2차원 배열)
         matrix = [[0 for _ in range(b_len+1)] for _ in range(a_len+1)]
         
         # 0일 때 초깃값을 설정
@@ -41,7 +43,7 @@ class SimpleChatBot:
                     matrix[i-1][j-1] + cost # 문자 변경
                 ])
         
-        return matrix[a_len][b_len]
+        return matrix[a_len][b_len]  # 최종 편집 거리 반환
 
     def find_best_answer(self, input_sentence):
         # 각 질문과의 레벤슈타인 거리 계산
